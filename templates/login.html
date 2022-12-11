@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load placeholders %}
+{%  block site_content %}
+
+
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+            <h5 class="register-title">Login</h5>
+            <p class="redirect-to-register-wrapper">If you have not created an account, click <a
+                    href="{% url 'register' %}"> <span class="color-b"> here.</span></a></p>
+                <form action="{% url 'login page' %}" method="post" class="form-register">
+                <div class="form-group ">
+                    <div class="error-messages-wrapper">
+                        <p class="error-messages-text">{{ wrong_credentials|striptags }}</p>
+                    </div>
+                    <label for="exampleInputEmail1">Enter Username</label>
+                    <p></p>
+                    {{ form.username|placeholder:"Username: " }}
+                </div>
+                    <p></p>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Enter Password</label>
+                    <p></p>
+                    {{ form.password|placeholder:"Password: " }}
+                </div>
+                <p></p>
+                <button class="btn btn-info btn-register-submit">Login</button>
+                {% csrf_token %}
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}

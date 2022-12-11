@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{%  block site_content %}
+
+      <main id="main">
+        <div class="edit-delete">
+         <section class="intro-single">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 col-lg-8">
+                <div class="title-single-box">
+                <h1>
+                    Are you sure you want to delete your profile?
+                </h1>
+                <form method="post" action="{% url 'delete user' pk=request.user.pk %}">
+                    <button class="btn btn-info btn-register-submit">Yes</button>
+                    <a href="{% url 'profile' pk=request.user.pk %}" class="btn btn-info btn-register-submit">Go back</a>
+                    {% csrf_token %}
+                </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+     </main>
+
+
+{% endblock %}

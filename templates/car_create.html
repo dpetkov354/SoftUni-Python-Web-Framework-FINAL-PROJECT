@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{%  block site_content %}
+
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+            <h5 class="register-title">Create listing</h5>
+            <form action="{% url 'create listing' %}" method="post" class="form-register">
+                {{ form.as_p }}
+                <p></p>
+                <button class="btn btn-info btn-register-submit">Create</button>
+                {% csrf_token %}
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
