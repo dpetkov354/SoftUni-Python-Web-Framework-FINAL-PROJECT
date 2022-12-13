@@ -14,9 +14,9 @@ class ChoicesEnumMixin:
         return max(len(name) for name, _ in cls.choices())
 
 class Gender(ChoicesEnumMixin, Enum):
-    male = "Male"
-    female = "Female"
-    other = "Other"
+    Male = "Male"
+    Female = "Female"
+    Other = "Other"
 
 class AppUser(AbstractUser):
     MIN_LEN_FIRST_NAME = 2

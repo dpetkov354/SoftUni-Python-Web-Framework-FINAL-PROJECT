@@ -352,13 +352,34 @@ a:hover {
 
 .title-box-d .title-d {
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 0rem;
 }
 
 .title-box-d .title-d:after {
   content: "";
   position: absolute;
-  width: 70px;
+  width: 600px;
+  height: 4px;
+  background-color: #2eca6a;
+  bottom: 20px;
+  left: 0;
+}
+
+.title-box-c {
+  padding-bottom: 1.8rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.title-box-c .title-d {
+  font-weight: 600;
+  font-size: 0rem;
+}
+
+.title-box-c .title-d:after {
+  content: "";
+  position: absolute;
+  width: 300px;
   height: 4px;
   background-color: #2eca6a;
   bottom: 20px;

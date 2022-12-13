@@ -21,9 +21,6 @@
                 </li>
                 {% if is_owner %}
                 <li class="breadcrumb-item">
-                  <a href="">Favorite Listings</a>
-                </li>
-                <li class="breadcrumb-item">
                   <a href="{% url 'edit user' pk=object.pk %}">Edit</a>
                 </li>
                 <li class="breadcrumb-item">
@@ -46,11 +43,13 @@
               <div class="col-md-6">
                 {% if object.profile_picture %}
                 <div class="agent-avatar-box">
-                  <img src="{{ object.profile_picture }}" alt="" class="agent-avatar img-fluid">
+                  <img src="{{ object.profile_picture }}" alt="{{ object.username }}"
+                       width='250px' class="agent-avatar img-fluid">
                 </div>
                 {% else %}
                 <div class="agent-avatar-box">
-                  <img src="https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png" alt="" class="agent-avatar img-fluid">
+                  <img src="https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"
+                       width='350px' alt="default" class="agent-avatar img-fluid">
                 </div>
                 {% endif %}
               </div>

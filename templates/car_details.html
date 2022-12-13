@@ -1,0 +1,110 @@
+{% extends 'core/base.html' %}
+{%  block site_content %}
+
+  <main id="main">
+
+    <!-- ======= Intro Single ======= -->
+    <section class="intro-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-8">
+            <div class="title-single-box">
+              <h1 class="title-single">{{ car.car_make }} {{ car.car_model }}</h1>
+              <span class="color-text-a">Price : {{ car.price|floatformat:"2g" }} €</span>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-4">
+            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a href="{% url 'home page' %}">Home</a>
+                </li>
+                {% if is_owner %}
+                <li class="breadcrumb-item">
+                  <a href="{% url 'edit car' car_slug=car.slug username=username %}">Edit</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a href="{% url 'delete car' car_slug=car.slug username=username %}">Delete</a>
+                </li>
+                {% endif %}
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Intro Single -->
+
+    <!-- ======= Agent Single ======= -->
+    <section class="agent-single">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="title-box-d">
+                <h3 class="title-d">
+                    <br>
+                </h3>
+                </div>
+                    <div class="agent-avatar-box">
+                      <img src="{{ car.picture }}" alt="{{ car.car_model }}" width='350px' class="agent-avatar img-fluid">
+                </div>
+              </div>
+
+              <div class="col-md-5 section-md-t3">
+                <div class="agent-info-box">
+                  <div class="agent-title">
+                    <div class="title-box-c">
+                      <h3 class="title-d">
+                        <br>
+                      </h3>
+                    </div>
+                    <div class="agent-content mb-3">
+                    <p class="content-d color-text-a">
+                      <strong>Make: </strong>
+                      {{ car.car_make }}
+                    </p>
+                    <div class="info-agents color-a">
+                      <p>
+                        <strong>Model: </strong>
+                        <span class="color-text-a"> {{ car.car_model }}</span>
+                      </p>
+                      <p>
+                        <strong>Engine: </strong>
+                        <span class="color-text-a"> {{ car.engine_type }}</span>
+                      </p>
+                      <p>
+                        <strong>Model year: </strong>
+                        <span class="color-text-a"> {{ car.model_year }}</span>
+                      </p>
+                      <p>
+                        <strong>Mileage: </strong>
+                        <span class="color-text-a"> {{ car.mileage }}</span>
+                      </p>
+                      <p>
+                        <strong>City: </strong>
+                        <span class="color-text-a"> {{ car.current_location }}</span>
+                      </p>
+                      <p>
+                        <strong>Contact number: </strong>
+                        <span class="color-text-a"> {{ car.contact_number }}</span>
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        <span class="color-text-a"> {{ car.description }}</span>
+                      </p>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Agent Single -->
+
+  </main><!-- End #main -->
+
+{% endblock %}
+

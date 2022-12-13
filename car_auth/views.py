@@ -25,6 +25,7 @@ class UserDetailsView(views.DetailView):
         context = super().get_context_data(**kwargs)
 
         context['is_owner'] = self.request.user == self.object
+        context['cars'] = self.object.car_set.all()
 
         return context
 

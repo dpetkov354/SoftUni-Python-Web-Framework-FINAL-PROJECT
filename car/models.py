@@ -2,17 +2,21 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.core import validators
 from common.validators import validate_only_letters, validate_integer
+from common.model_mixins import StrFromFieldsMixin
+from django.utils.text import slugify
 
 UserModel = get_user_model()
 
-class Car(models.Model):
+class Car(StrFromFieldsMixin, models.Model):
+    str_fields = ('id', 'model')
+
     MAX_LENGHT = 30
     MIN_LENGHT = 2
 
-    GASOLINE = "GS"
-    DIESEL = "DS"
-    ELECTRIC = "EL"
-    HYBRID = "HB"
+    GASOLINE = "Gasoline"
+    DIESEL = "Diesel"
+    ELECTRIC = "Electric"
+    HYBRID = "Hybrid"
 
     ENGINE_CHOICES = (
         (GASOLINE, "Gasoline"),
@@ -37,7 +41,6 @@ class Car(models.Model):
         blank=False,
         validators=(
             validators.MinLengthValidator(MIN_LENGHT),
-            validate_only_letters,
         )
     )
 
@@ -48,7 +51,6 @@ class Car(models.Model):
     )
 
     price = models.IntegerField(
-        max_length=MAX_LENGHT,
         null=False,
         blank=False,
         validators=(
@@ -57,7 +59,6 @@ class Car(models.Model):
     )
 
     mileage = models.IntegerField(
-        max_length=MAX_LENGHT,
         null=False,
         blank=False,
         validators=(
@@ -66,7 +67,6 @@ class Car(models.Model):
     )
     
     model_year = models.IntegerField(
-        max_length=MAX_LENGHT,
         null=False,
         blank=False,
         validators=(
@@ -104,4 +104,35 @@ class Car(models.Model):
         validators=(
             validators.MinLengthValidator(MIN_LENGHT),
         )
+    )
+
+    slug = models.SlugField(
+        unique=True,
+        null=False,
+        blank=True,
+    )
+
+    user = models.ForeignKey(
+       UserModel,
+       on_delete=models.RESTRICT,
+    )
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.slug:
+            self.slug = slugify(f'{self.id}-{self.car_model}')
+        return super().save(*args, **kwargs)
+
+class ListingFavorite(models.Model):
+    car = models.ForeignKey(
+        Car,
+        on_delete=models.RESTRICT,
+        null=False,
+        blank=True,
+    )
+
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
     )
