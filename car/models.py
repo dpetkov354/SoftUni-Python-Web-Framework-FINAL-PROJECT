@@ -7,6 +7,7 @@ from django.utils.text import slugify
 
 UserModel = get_user_model()
 
+
 class Car(StrFromFieldsMixin, models.Model):
     str_fields = ('id', 'model')
 

@@ -5,15 +5,16 @@ from car_auth.forms import UserCreateForm
 from car.models import Car
 from car.forms import CreateCarForm, EditCarForm, CarDeleteForm
 from car.utils import get_car_by_name_and_username, is_owner
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic as views
-
+from car.models import Car
 
 UserModel = get_user_model()
 
 
 def home_page(request):
     user = UserModel
+
     contex = {
         "user": user,
     }
@@ -59,16 +60,16 @@ def create_listing(request):
 class MyListingsView(views.DetailView):
     template_name = 'my_listings.html'
     model = UserModel
-    cars_paginate_by = 1
+    cars_paginate_by = 3
 
     def get_cars_page(self):
         return self.request.GET.get('page', 1)
 
     def get_paginated_cars(self):
-        car = self.get_cars_page()
+        page = self.get_cars_page()
 
         cars = self.object.car_set \
-            .order_by('-publication_date')
+            .order_by('car_make')
 
         paginator = Paginator(cars, self.cars_paginate_by)
         return paginator.get_page(page)
@@ -78,7 +79,7 @@ class MyListingsView(views.DetailView):
 
         context['is_owner'] = self.request.user == self.object
 
-        context['cars'] = self.object.car_set.all()
+        context['cars'] = self.get_paginated_cars()
 
         context['cars_count'] = self.object.car_set.count()
 
@@ -149,3 +150,42 @@ def delete_car(request, username, car_slug):
         'car_delete.html',
         context,
     )
+
+def search_cars(request):
+    query_cars = Car.objects.all()
+
+    search_make_query = request.GET.get("search_make")
+    search_model_query = request.GET.get("search_model")
+
+    search_year_query = request.GET.get("search_year")
+    search_price_query = request.GET.get("search_price")
+
+    if search_make_query != '' and search_make_query is not None:
+        query_cars = query_cars.filter(car_make__icontains=search_make_query)
+
+    if search_model_query != '' and search_model_query is not None:
+        query_cars = query_cars.filter(car_model__icontains=search_model_query)
+
+    if search_year_query != '' and search_year_query is not None:
+        query_cars = query_cars.filter(model_year__gte=search_year_query)
+
+    if search_price_query != '' and search_price_query is not None:
+        query_cars = query_cars.filter(price__lte=search_price_query)
+
+    paginator = Paginator(query_cars, 3)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        "query_cars": query_cars,
+        "listing_count": query_cars.count(),
+        'posts': posts,
+    }
+
+    return render(request, "search_listings.html", context)
