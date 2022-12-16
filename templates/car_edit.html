@@ -1,22 +1,29 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
 
-    <section class="intro-single">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-lg-8">
-            <div class="title-single-box">
-            <h5 class="register-title">Edit listing</h5>
-            <form action="{% url 'edit car' username=username car_slug=car_slug %}" method="post" class="form-register">
-                {{ form.as_p }}
-                <p></p>
-                <button class="btn btn-info btn-register-submit">Update</button>
-                {% csrf_token %}
-            </form>
-            </div>
-          </div>
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h5 class="register-title">Edit listing</h5>
+
+          <form action="{% url 'edit car' username=username car_slug=car_slug %}" method="post" class="form-register">
+
+            {% for error in form.non_field_errors %}
+            {{error}}
+            {% endfor %}
+
+            {{ form.as_p }}
+            <p></p>
+            <button class="btn btn-info btn-register-submit">Update</button>
+            {% csrf_token %}
+          </form>
+
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

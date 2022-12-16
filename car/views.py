@@ -1,10 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_page
 from django.shortcuts import render, redirect
-from django.contrib.auth import views as auth_views, get_user_model
-from car_auth.forms import UserCreateForm
-from car.models import Car
+from django.contrib.auth import get_user_model
 from car.forms import CreateCarForm, EditCarForm, CarDeleteForm
-from car.utils import get_car_by_name_and_username, is_owner
+from car.utils import get_car_by_name_and_username, is_owner, is_staff
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic as views
 from car.models import Car
@@ -35,6 +34,7 @@ def contacts_page(request):
                   "contact.html"
                   )
 
+
 @login_required
 def create_listing(request):
     if request.method == 'GET':
@@ -62,11 +62,11 @@ class MyListingsView(views.DetailView):
     model = UserModel
     cars_paginate_by = 3
 
-    def get_cars_page(self):
+    def __get_cars_page(self):
         return self.request.GET.get('page', 1)
 
-    def get_paginated_cars(self):
-        page = self.get_cars_page()
+    def __get_paginated_cars(self):
+        page = self.__get_cars_page()
 
         cars = self.object.car_set \
             .order_by('car_make')
@@ -79,7 +79,7 @@ class MyListingsView(views.DetailView):
 
         context['is_owner'] = self.request.user == self.object
 
-        context['cars'] = self.get_paginated_cars()
+        context['cars'] = self.__get_paginated_cars()
 
         context['cars_count'] = self.object.car_set.count()
 
@@ -93,6 +93,7 @@ def details_car(request, username, car_slug):
         'car': car,
         'username': username,
         'is_owner': car.user == request.user,
+        'is_staff': request.user.is_staff
     }
 
     return render(
@@ -101,11 +102,12 @@ def details_car(request, username, car_slug):
         context,
     )
 
+
 @login_required
 def edit_car(request, username, car_slug):
     car = get_car_by_name_and_username(car_slug, username)
 
-    if not is_owner(request, car):
+    if not is_owner or not is_staff(request, car):
         return redirect('details car', username=username, car_slug=car_slug)
 
     if request.method == 'GET':
@@ -128,8 +130,12 @@ def edit_car(request, username, car_slug):
         context,
     )
 
+
 def delete_car(request, username, car_slug):
     car = get_car_by_name_and_username(car_slug, username)
+
+    if not is_owner or not is_staff(request, car):
+        return redirect('details car', username=username, car_slug=car_slug)
 
     if request.method == 'GET':
         form = CarDeleteForm(instance=car)
@@ -151,6 +157,8 @@ def delete_car(request, username, car_slug):
         context,
     )
 
+
+@cache_page(15 * 60)
 def search_cars(request):
     query_cars = Car.objects.all()
 

@@ -17,7 +17,6 @@ class EditCarForm(forms.ModelForm):
                   'contact_number', 'picture', 'description')
 
 class CarDeleteForm(CreateCarForm):
-
     def save(self, commit=True):
         if commit:
             self.instance.delete()

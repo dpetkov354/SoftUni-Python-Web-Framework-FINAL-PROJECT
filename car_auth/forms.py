@@ -1,6 +1,7 @@
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import views as auth_views, get_user_model
 from django.contrib.auth.forms import UsernameField
+from django.views.generic import DeleteView
 
 UserModel = get_user_model()
 

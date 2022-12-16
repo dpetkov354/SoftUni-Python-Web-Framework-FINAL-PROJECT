@@ -115,7 +115,7 @@ class Car(StrFromFieldsMixin, models.Model):
 
     user = models.ForeignKey(
        UserModel,
-       on_delete=models.RESTRICT,
+       on_delete=models.CASCADE,
     )
 
     def save(self, *args, **kwargs):
@@ -124,16 +124,3 @@ class Car(StrFromFieldsMixin, models.Model):
         if not self.slug:
             self.slug = slugify(f'{self.id}-{self.car_model}')
         return super().save(*args, **kwargs)
-
-class ListingFavorite(models.Model):
-    car = models.ForeignKey(
-        Car,
-        on_delete=models.RESTRICT,
-        null=False,
-        blank=True,
-    )
-
-    user = models.ForeignKey(
-        UserModel,
-        on_delete=models.RESTRICT,
-    )

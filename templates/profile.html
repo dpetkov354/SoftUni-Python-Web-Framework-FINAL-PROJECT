@@ -1,91 +1,95 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
 
-  <main id="main">
+<!-- ======= Intro ======= -->
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h1 class="title-single">{{ object.username }}</h1>
+          <span class="color-text-a">{{ listings_count }} Listings</span>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-4">
+        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+          <ol class="breadcrumb">
 
-    <!-- ======= Intro Single ======= -->
-    <section class="intro-single">
-      <div class="container">
+            <li class="breadcrumb-item">
+              <a href="{% url 'home page' %}">Home</a>
+            </li>
+
+            {% if is_owner or is_staff%}
+            <li class="breadcrumb-item">
+              <a href="{% url 'edit user' pk=object.pk %}">Edit</a>
+            </li>
+            {% endif %}
+
+            {% if is_owner or is_superuser%}
+            <li class="breadcrumb-item">
+              <a href="{% url 'delete user' pk=object.pk %}">Delete</a>
+            </li>
+            {% endif %}
+
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Intro -->
+
+<!-- ======= Profile ======= -->
+<section class="agent-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
         <div class="row">
-          <div class="col-md-12 col-lg-8">
-            <div class="title-single-box">
-              <h1 class="title-single">{{ object.username }}</h1>
-              <span class="color-text-a">0 Favorite listings</span>
+
+          <div class="col-md-6">
+            {% if object.profile_picture %}
+            <div class="agent-avatar-box">
+              <img src="{{ object.profile_picture }}" alt="{{ object.username }}" width='250px' class="agent-avatar img-fluid">
             </div>
+            {% else %}
+            <div class="agent-avatar-box">
+              <img src="https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png" width='350px' alt="default" class="agent-avatar img-fluid">
+            </div>
+            {% endif %}
           </div>
-          <div class="col-md-12 col-lg-4">
-            <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                  <a href="{% url 'home page' %}">Home</a>
-                </li>
-                {% if is_owner %}
-                <li class="breadcrumb-item">
-                  <a href="{% url 'edit user' pk=object.pk %}">Edit</a>
-                </li>
-                <li class="breadcrumb-item">
-                  <a href="{% url 'delete user' pk=object.pk %}">Delete</a>
-                </li>
-                {% endif %}
-              </ol>
-            </nav>
+
+          <div class="col-md-5 section-md-t3">
+            <div class="agent-info-box">
+              <div class="agent-title">
+                <div class="title-box-d">
+                  <h3 class="title-d">
+                    <br>
+                  </h3>
+                </div>
+              </div>
+              <div class="agent-content mb-3">
+                <p class="content-d color-text-a">
+                  <strong>Name: </strong>
+                  {{ object.first_name }} {{ object.last_name }}
+                </p>
+                <div class="info-agents color-a">
+                  <p>
+                    <strong>Gender: </strong>
+                    <span class="color-text-a"> {{ object.gender }}</span>
+                  </p>
+                  <p>
+                    <strong>Email: </strong>
+                    <span class="color-text-a"> {{ object.email }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section><!-- End Intro Single -->
-
-    <!-- ======= Agent Single ======= -->
-    <section class="agent-single">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-12">
-            <div class="row">
-              <div class="col-md-6">
-                {% if object.profile_picture %}
-                <div class="agent-avatar-box">
-                  <img src="{{ object.profile_picture }}" alt="{{ object.username }}"
-                       width='250px' class="agent-avatar img-fluid">
-                </div>
-                {% else %}
-                <div class="agent-avatar-box">
-                  <img src="https://sbcf.fr/wp-content/uploads/2018/03/sbcf-default-avatar.png"
-                       width='350px' alt="default" class="agent-avatar img-fluid">
-                </div>
-                {% endif %}
-              </div>
-              <div class="col-md-5 section-md-t3">
-                <div class="agent-info-box">
-                  <div class="agent-title">
-                    <div class="title-box-d">
-                      <h3 class="title-d">
-                        <br>
-                      </h3>
-                    </div>
-                  </div>
-                  <div class="agent-content mb-3">
-                    <p class="content-d color-text-a">
-                      <strong>Name: </strong>
-                      {{ object.first_name }} {{ object.last_name }}
-                    </p>
-                    <div class="info-agents color-a">
-                      <p>
-                        <strong>Gender: </strong>
-                        <span class="color-text-a"> {{ object.gender }}</span>
-                      </p>
-                      <p>
-                        <strong>Email: </strong>
-                        <span class="color-text-a"> {{ object.email }}</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section><!-- End Agent Single -->
-
-  </main><!-- End #main -->
+    </div>
+  </div>
+</section>
+<!-- End Profile -->
 
 {% endblock %}

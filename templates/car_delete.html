@@ -1,23 +1,24 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
 
-    <section class="intro-single">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-lg-8">
-            <div class="title-single-box">
-            <h5 class="register-title">Delete listing</h5>
-            <form action="{% url 'delete car' username=username car_slug=car_slug %}" method="post" class="form-register">
-                {{ form.as_p }}
-                <p></p>
-                <button class="btn btn-info btn-register-submit">Delete</button>
-                {% csrf_token %}
-            </form>
-            </div>
-          </div>
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h5 class="register-title">Delete listing</h5>
+
+          <form action="{% url 'delete car' username=username car_slug=car_slug %}" method="post" class="form-register">
+            {{ form.as_p }}
+            <p></p>
+            <button class="btn btn-info btn-register-submit">Delete</button>
+            {% csrf_token %}
+          </form>
+
         </div>
       </div>
-    </section>
-
+    </div>
+  </div>
+</section>
 
 {% endblock %}

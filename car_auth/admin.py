@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.contrib.auth import admin as auth_admin, get_user_model
-
 from car_auth.forms import UserCreateForm, UserEditForm
 
 UserModel = get_user_model()
@@ -8,7 +7,6 @@ UserModel = get_user_model()
 
 @admin.register(UserModel)
 class UserAdmin(auth_admin.UserAdmin):
-    admin.site.unregister(UserModel)
     form = UserEditForm
     add_form = UserCreateForm
 

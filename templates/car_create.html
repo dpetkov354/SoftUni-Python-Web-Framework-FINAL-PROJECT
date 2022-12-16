@@ -1,42 +1,47 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
-    {% load placeholders %}
+{% load placeholders %}
 
-    <section class="intro-single">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-lg-8">
-            <div class="title-single-box">
-            <h5 class="register-title">Create listing</h5>
-            <form action="{% url 'create listing' %}" method="post" class="form-register">
-                {{ form.car_make|placeholder:"Make: " }}
-                <p></p>
-                {{ form.car_model|placeholder:"Model: " }}
-                <p></p>
-                {{ form.engine_type}}
-                <p></p>
-                {{ form.price|placeholder:"Price: " }}
-                <p></p>
-                {{ form.mileage|placeholder:"Mileage: " }}
-                <p></p>
-                {{ form.model_year|placeholder:"Year: " }}
-                <p></p>
-                {{ form.current_location|placeholder:"Location: " }}
-                <p></p>
-                {{ form.contact_number|placeholder:"Mobile number: " }}
-                <p></p>
-                {{ form.picture|placeholder:"Picture URL: " }}
-                <p></p>
-                {{ form.description|placeholder:"Description: " }}
-                <p></p>
-                <button type="submit" class="btn btn-info btn-register-submit">Create</button>
-                {% csrf_token %}
-            </form>
-            </div>
-          </div>
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h5 class="register-title">Create listing</h5>
+
+          <form action="{% url 'create listing' %}" method="post" class="form-register">
+            {% for error in form.non_field_errors %}
+            {{error}}
+            {% endfor %}
+            {{ form.car_make|placeholder:"Make: " }}
+            <p></p>
+            {{ form.car_model|placeholder:"Model: " }}
+            <p></p>
+            {{ form.engine_type}}
+            <p></p>
+            {{ form.price|placeholder:"Price: " }}
+            <p></p>
+            {{ form.mileage|placeholder:"Mileage: " }}
+            <p></p>
+            {{ form.model_year|placeholder:"Year: " }}
+            <p></p>
+            {{ form.current_location|placeholder:"Location: " }}
+            <p></p>
+            {{ form.contact_number|placeholder:"Mobile number: " }}
+            <p></p>
+            {{ form.picture|placeholder:"Picture URL: " }}
+            <p></p>
+            {{ form.description|placeholder:"Description: " }}
+            <p></p>
+            <button type="submit" class="btn btn-info btn-register-submit">Create</button>
+            {% csrf_token %}
+          </form>
+
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
 

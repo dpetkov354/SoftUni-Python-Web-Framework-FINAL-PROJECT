@@ -1,119 +1,119 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
 
-  <main id="main">
+<!-- ======= Intro ======= -->
+<section class="intro-single">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8">
+        <div class="title-single-box">
+          <h1 class="title-single">Searches</h1>
+          <div class="click-closed"></div>
 
-    <!-- ======= Intro Single ======= -->
-    <section class="intro-single">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 col-lg-8">
-            <div class="title-single-box">
-              <h1 class="title-single">Searches</h1>
-                  <div class="click-closed"></div>
-                  <form class="form-a">
-                    <div class="row">
-                      <div class="col-md-6 mb-2">
-                        <div class="form-group mt-3">
-                          <label class="pb-2" for="Type">Make</label>
-                          <input type="search" name="search_make" class="form-control form-control-a" placeholder="Make:">
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-2">
-                        <div class="form-group mt-3">
-                          <label class="pb-2" for="Type">Model</label>
-                          <input type="search" name="search_model" class="form-control form-control-a" placeholder="Model:">
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-2">
-                        <div class="form-group mt-3">
-                          <label class="pb-2" for="Type">From year or newer</label>
-                          <input type="search" name="search_year" class="form-control form-control-a" placeholder="Year:">
-                        </div>
-                      </div>
-                      <div class="col-md-6 mb-2">
-                        <div class="form-group mt-3">
-                          <label class="pb-2" for="Type">Maximum price</label>
-                          <input type="search" name="search_price" class="form-control form-control-a" placeholder="Price:">
-                        </div>
-                      </div>
-                      <p><div class="col-md-12 mb-2">
-                        <button type="submit" class="btn btn-b">Search for cars</button>
-                      </div>
-                      <a href="{% url 'search cars' %}">
-                        <button type="submit" class="btn btn-b">Clear</button>
-                      </a>
-                    </div>
-                  </form>
+          <form class="form-a">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <div class="form-group mt-3">
+                  <label class="pb-2" for="Type">Make
+                    <input type="search" name="search_make" class="form-control form-control-a" placeholder="Make:">
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-group mt-3">
+                  <label class="pb-2" for="Type">Model
+                    <input type="search" name="search_model" class="form-control form-control-a" placeholder="Model:">
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-group mt-3">
+                  <label class="pb-2" for="Type">From year or newer
+                    <input type="search" name="search_year" class="form-control form-control-a" placeholder="Year:">
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="form-group mt-3">
+                  <label class="pb-2" for="Type">Maximum price
+                    <input type="search" name="search_price" class="form-control form-control-a" placeholder="Price:">
+                  </label>
+                </div>
+              </div>
+              <p>
+              <div class="col-md-12 mb-2">
+                <button type="submit" class="btn btn-b">Search for cars</button>
+              </div>
+              <a href={% url 'search cars' %}>
+                <button type="submit" class="btn btn-b">Clear</button>
+              </a>
             </div>
-          </div>
+          </form>
+
         </div>
       </div>
-    </section><!-- End Intro Single-->
+    </div>
+  </div>
+</section>
+<!-- End Intro -->
 
-    <!-- ======= Car Grid ======= -->
-
-    <div class="album py-5 bg-light">
-    <div class="container">
-      <p><span class="color-text-a">Listed cars: {{ listing_count }}</span></p>
-      <div class="row">
+<!-- ======= Car Grid ======= -->
+<div class="album py-5 bg-light">
+  <div class="container">
+    <p><span class="color-text-a">Listed cars: {{ listing_count }}</span></p>
+    <div class="row">
 
       {% for car in posts %}
-        <div class="col-md-4">
-          <div class="card mb-4 box-shadow">
-            <img class="card-img-top" width='250px' height='300px' src="{{ car.picture }}" alt="{{ car.model }}">
-            <div class="card-body">
-              <span class="color-text-a">{{ car.model_year }} {{ car.car_make }} {{ car.car_model }}</span>
-              <p class="card-text">{{ car.description }}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <a href="">
-                        <button type="button" class="btn btn-sm btn-outline-secondary">View Details</button>
-                    </a>
-                </div>
-                <small class="text-muted">{{ car.price }} €</small>
+      <div class="col-md-4">
+        <div class="card mb-4 box-shadow">
+          <img class="card-img-top" width='250px' height='300px' src="{{ car.picture }}" alt="{{ car.model }}">
+          <div class="card-body">
+            <span class="color-text-a">{{ car.model_year }} {{ car.car_make }} {{ car.car_model }}</span>
+            <p class="card-text">{{ car.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <a href={% url 'details car' username=car.user.username car_slug=car.slug %}>
+                  <button type="button" class="btn btn-sm btn-outline-secondary">View Details</button>
+                </a>
               </div>
+              <small class="text-muted">{{ car.price }} €</small>
             </div>
           </div>
         </div>
-        {% endfor %}
       </div>
-    </div>
-    </div>
-    <!-- ======= END Car Grid ======= -->
+      {% endfor %}
 
-    <!-- ======= Pagination ======= -->
-        <p></p>
-            {% if posts.has_other_pages %}
-            <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                {% if posts.has_previous %}
-                    <li class="page-item"><a href="?page=
-                            {{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i
-                            class="page-link">Prevous</i></a></li>
-                {% else %}
-                    <li class="page-item disabled"><a class="page-link" href="#!"><i>Prevous</i></a></li>
-                {% endif %}
-                {% for num in posts.paginator.page_range %}
-                    {% if posts.number == num %}
-                        <li class="page-item active"><a class="page-link" href="#!">{{ num }}</a></li>
-                    {% else %}
-                        <li class="page-item"><a class="page-link"
-                                href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a></li>
-                    {% endif %}
-                {% endfor %}
-                {% if posts.has_next %}
-                    <li class="page-item"><a
-                            href="?page={{ posts.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i
-                            class="page-link">Next</i></a></li>
-                {% else %}
-                    <li class="page-item disabled"><a class="page-link" href="#!"><i >Next</i></a></li>
-                {% endif %}
-            </ul>
-            </nav>
-        {% endif %}
-    <!-- ======= END Pagination ======= -->
+    </div>
+  </div>
+</div>
+<!-- ======= END Car Grid ======= -->
 
-    </main><!-- End #main -->
+<!-- ======= Pagination ======= -->
+<p></p>
+{% if posts.has_other_pages %}
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    {% if posts.has_previous %}
+    <li class="page-item"><a href="?page=
+                            {{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="page-link">Previous</i></a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#"><i>Previous</i></a></li>
+    {% endif %}
+    {% for num in posts.paginator.page_range %}
+    {% if posts.number == num %}
+    <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="?page={{ num }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ num }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+    <li class="page-item"><a href="?page={{ posts.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><i class="page-link">Next</i></a></li>
+    {% else %}
+    <li class="page-item disabled"><a class="page-link" href="#"><i>Next</i></a></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+<!-- ======= END Pagination ======= -->
 
 {% endblock %}

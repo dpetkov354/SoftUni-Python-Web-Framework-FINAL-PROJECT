@@ -1,98 +1,40 @@
 {% extends 'core/base.html' %}
 {%  block site_content %}
 
-  <!-- ======= Intro Section ======= -->
-  <div class="intro intro-carousel swiper position-relative">
-    <div class="swiper-wrapper">
-      <div class="swiper-slide intro-item bg-image" style="background-image: url(static/img/home_page_background_image.jpg)">
-        <div class="overlay overlay-a"></div>
-        <div class="intro-content display-table">
-          <div class="table-cell">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-8">
-                   {% if request.user.is_authenticated %}
-                   <div class="intro-body">
-                    <h1 class="intro-title mb-4 ">
-                      <span class="color-b">Welcome! {{ request.user.first_name }}</span>
-                      <br> Let's find a car for you!
-                    </h1>
-                  </div>
-                  {% else %}
-                  <div class="intro-body">
-                    <h1 class="intro-title mb-4 ">
-                      <span class="color-b">The Right </span> Ride
-                      <br> For you
-                    </h1>
-                  </div>
-                  {% endif %}
-                  </div>
+<div class="intro intro-carousel swiper position-relative">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide intro-item bg-image" style="background-image: url(static/img/home_page_background_image.jpg)">
+      <div class="overlay overlay-a"></div>
+      <div class="intro-content display-table">
+        <div class="table-cell">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8">
+
+                {% if request.user.is_authenticated %}
+                <div class="intro-body">
+                  <h1 class="intro-title mb-4 ">
+                    <span class="color-b">Welcome! {{ request.user.first_name }}</span>
+                    <br> Let's find a car for you!
+                  </h1>
+                </div>
+
+                {% else %}
+                <div class="intro-body">
+                  <h1 class="intro-title mb-4 ">
+                    <span class="color-b">The Right </span> Ride
+                    <br> For you
+                  </h1>
+                </div>
+                {% endif %}
+
               </div>
             </div>
           </div>
         </div>
-        </div>
       </div>
-  </div><!-- End Intro Section -->
-
-{% endblock %}
-
-
-  <!-- ======= Search ======= -->
- <div class="click-closed"></div>
-  <div class="box-collapse">
-    <div class="title-box-d">
-      <h3 class="title-d">Search Property</h3>
-    </div>
-    <span class="close-box-collapse right-boxed bi bi-x"></span>
-    <div class="box-collapse-wrap form">
-      <form class="form-a">
-        <div class="row">
-          <div class="col-md-6 mb-2">
-            <div class="form-group mt-3">
-              <label class="pb-2" for="Type">Make</label>
-              <input type="search" name="search_make" class="form-control form-control-a" placeholder="Make:">
-            </div>
-          </div>
-          <div class="col-md-6 mb-2">
-            <div class="form-group mt-3">
-              <label class="pb-2" for="Type">Model</label>
-              <input type="search" name="search_model" class="form-control form-control-a" placeholder="Model:">
-            </div>
-          </div>
-          <div class="col-md-6 mb-2">
-            <div class="form-group mt-3">
-              <label class="pb-2" for="Type">Year</label>
-              <input type="search" name="search_year" class="form-control form-control-a" placeholder="Year:">
-            </div>
-          </div>
-          <div class="col-md-6 mb-2">
-            <div class="form-group mt-3">
-              <label class="pb-2" for="Type">Price</label>
-              <input type="search" name="price" class="form-control form-control-a" placeholder="Price:">
-            </div>
-          </div>
-          <div class="col-md-6 mb-2">
-            <div class="form-group mt-3">
-              <label class="pb-2" for="garages">Engine Type</label>
-              <select type="search" name="search_engine" class="form-control form-select form-control-a" id="garages">
-                <option>Any</option>
-                <option>01</option>
-                <option>02</option>
-                <option>03</option>
-                <option>04</option>
-              </select>
-            </div>
-          </div>
-          <p><div class="col-md-12">
-            <button type="submit" class="btn btn-b">Search for cars</button>
-          </div>
-        </div>
-      </form>
     </div>
   </div>
+</div>
 
- <button type="button" class="btn btn-b-n navbar-toggle-box navbar-toggle-box-collapse" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01">
-        <i class="bi bi-search"></i>
- </button>
- <!-- ======= END Search ======= -->
+{% endblock %}
