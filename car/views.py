@@ -1,9 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_page
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from car.forms import CreateCarForm, EditCarForm, CarDeleteForm
-from car.utils import get_car_by_name_and_username, is_owner, is_staff
+from car.utils import get_car_by_name_and_username
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic as views
 from car.models import Car
@@ -93,7 +92,7 @@ def details_car(request, username, car_slug):
         'car': car,
         'username': username,
         'is_owner': car.user == request.user,
-        'is_staff': request.user.is_staff
+        'is_staff': request.user.is_staff,
     }
 
     return render(
@@ -106,8 +105,15 @@ def details_car(request, username, car_slug):
 @login_required
 def edit_car(request, username, car_slug):
     car = get_car_by_name_and_username(car_slug, username)
+    is_current_owner = False
 
-    if not is_owner or not is_staff(request, car):
+    if car.user == request.user:
+        is_current_owner = True
+
+    if request.user.is_staff:
+        is_current_owner = True
+
+    if is_current_owner is False:
         return redirect('details car', username=username, car_slug=car_slug)
 
     if request.method == 'GET':
@@ -131,10 +137,19 @@ def edit_car(request, username, car_slug):
     )
 
 
+@login_required
 def delete_car(request, username, car_slug):
     car = get_car_by_name_and_username(car_slug, username)
 
-    if not is_owner or not is_staff(request, car):
+    is_current_owner = False
+
+    if car.user == request.user:
+        is_current_owner = True
+
+    if request.user.is_staff:
+        is_current_owner = True
+
+    if is_current_owner is False:
         return redirect('details car', username=username, car_slug=car_slug)
 
     if request.method == 'GET':
@@ -158,7 +173,6 @@ def delete_car(request, username, car_slug):
     )
 
 
-@cache_page(15 * 60)
 def search_cars(request):
     query_cars = Car.objects.all()
 

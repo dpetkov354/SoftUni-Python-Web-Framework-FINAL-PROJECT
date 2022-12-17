@@ -25,7 +25,7 @@
               <a href="{% url 'search cars' %}">Search Cars</a>
             </li>
 
-            {% if user.is_owner or user.is_staff %}
+            {% if is_owner or is_staff %}
             <li class="breadcrumb-item">
               <a href="{% url 'edit car' car_slug=car.slug username=username %}">Edit</a>
             </li>
