@@ -35,8 +35,7 @@ ROOT_URLCONF = 'Project_defence.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -56,7 +55,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'project_db',
         'USER': 'postgres',
-        'PASSWORD': '960352871454Vv!',
+        'PASSWORD': 'ENTER_PASSWORD',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }

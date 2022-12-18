@@ -1,8 +1,9 @@
 from django import forms
 from car.models import Car
-from django.contrib.auth import views as auth_views, get_user_model
+from django.contrib.auth import get_user_model
 
 UserModel = get_user_model()
+
 
 class CreateCarForm(forms.ModelForm):
     class Meta:
@@ -10,11 +11,13 @@ class CreateCarForm(forms.ModelForm):
         fields = ('car_make', 'car_model', 'engine_type', 'price', 'mileage', 'model_year', 'current_location',
                   'contact_number', 'picture', 'description')
 
+
 class EditCarForm(forms.ModelForm):
     class Meta:
         model = Car
         fields = ('car_make', 'car_model', 'engine_type', 'price', 'mileage', 'model_year', 'current_location',
                   'contact_number', 'picture', 'description')
+
 
 class CarDeleteForm(CreateCarForm):
     def save(self, commit=True):
